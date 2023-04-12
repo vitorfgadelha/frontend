@@ -3,12 +3,10 @@ import { Table } from "reactstrap";
 import NewParticipantModal from "./NewParticipantModal";
 import DeliverModal from "./DeliverModal";
 import ConfirmRemovalModal from "./ConfirmRemovalModal";
-import ListingPageContainer from "./ListingPageContainer"
 
 class ParticipantList extends Component {
   render() {
     const participants = this.props.participants;
-    const page = this.props.page;
 
     return (
       <><Table hover responsive>
@@ -28,11 +26,11 @@ class ParticipantList extends Component {
         </thead>
       </Table>
       <div style={{height: "300px", overflowY: "auto"}}>
-      <Table hover responsive>
+      <Table hover responsive onScroll={this.props.handleScroll}>
         <tbody>
           {!participants || participants.length <= 0 ? (
           <tr>
-            <td colSpan="6" align="center">
+            <td colSpan="9" align="center">
               <b>Ops, no one here yet</b>
             </td>
           </tr>
@@ -41,7 +39,7 @@ class ParticipantList extends Component {
                 <tr key={participant.bib} >
                   <td colSpan="9" align="center"></td>
                     <td align="center" style={{width: "5%"}}>{participant.bib}</td>
-                    <td style={{width: "35%"}}>{participant.name}</td>
+                    <td style={{width: "34%"}}>{participant.name}</td>
                     <td align="center" style={{width: "5%"}}>{participant.gender}</td>
                     <td align="center" style={{width: "10%"}}>{participant.dob}</td>
                     <td align="center" style={{width: "12%"}}>{participant.cpf}</td>
