@@ -4,6 +4,7 @@ import ParticipantList from "./ParticipantList";
 import NewParticipantModal from "./NewParticipantModal";
 import Paginator from "./Paginator";
 import ReactPaginate from 'react-paginate';
+import {Button} from "reactstrap"
 
 import axios from "axios";
 
@@ -47,6 +48,12 @@ class Home extends Component {
 
   handleUpdate(pageNumber) {
     axios.get(API_URL + `?page=${pageNumber}`).then(res =>this.setState({ participants: res.data.results }));
+  }
+
+  toggle() {
+    axios.get(API_URL + 'generate_report/').then(() =>{
+      alert("Relatório Gerado")
+    })
   }
 
   handleClick(event, index) {
@@ -128,7 +135,21 @@ class Home extends Component {
           <Col>
             <NewParticipantModal create={true} resetState={this.resetState}/>
           </Col>
+          <Col></Col>
+          <Col></Col>
+          <Col></Col>
+          <Col>
+          <Button
+            color="primary"
+            className="float-right"
+            onClick={this.toggle}
+            style={{ minWidth: "200px" }}
+            >
+          Gerar Relatório
+          </Button>
+          </Col>
         </Row>
+
       </Container>
     );
   }
