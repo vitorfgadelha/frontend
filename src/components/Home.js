@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Col, Container, Input, Row, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import ParticipantList from "./ParticipantList";
 import NewParticipantModal from "./NewParticipantModal";
-import Paginator from "./Paginator";
-import ReactPaginate from 'react-paginate';
 import {Button} from "reactstrap"
 
 import axios from "axios";
@@ -68,12 +66,12 @@ class Home extends Component {
   render() {
     const { currentPage } = this.state;
     this.pageSize = 3;
-    this.pagesCount = Math.ceil(3500 / 100);
+    this.pagesCount = Math.ceil(1400 / 100);
     return (
       <Container style={{ marginTop: "20px" }}>
         <div className="d-flex justify-content-center">
           {this.state.pagination && (
-            <Pagination size="sm">
+            <Pagination>
               <PaginationItem disabled={currentPage <= 0}>
                 <PaginationLink
                   className="prev-next-buttons"
