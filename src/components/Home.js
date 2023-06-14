@@ -68,12 +68,12 @@ class Home extends Component {
   render() {
     const { currentPage } = this.state;
     this.pageSize = 3;
-    this.pagesCount = Math.ceil(3500 / 100);
+    this.pagesCount = Math.ceil(1400 / 100);
     return (
       <Container style={{ marginTop: "20px" }}>
         <div className="d-flex justify-content-center">
           {this.state.pagination && (
-            <Pagination size="sm">
+            <Pagination size="large">
               <PaginationItem disabled={currentPage <= 0}>
                 <PaginationLink
                   className="prev-next-buttons"
