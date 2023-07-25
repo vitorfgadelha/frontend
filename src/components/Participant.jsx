@@ -8,9 +8,9 @@ export default function Participant({id, name, age}) {
       <Name>{name}</Name>
       <Dob>{age}</Dob>
       <Gender>M</Gender>
-      <Cpf>Teste</Cpf>
+      <Cpf>00921285213</Cpf>
       <Race>teste</Race>
-      <Shirt>teste</Shirt>
+      <Shirt>M</Shirt>
       <Delivered>
         <Button>Entregar</Button>
       </Delivered>

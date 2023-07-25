@@ -3,7 +3,7 @@ import { SContainer } from "../styles/TableContent.style";
 import Participant from "./Participant";
 
 const data = [
-  { id: 1, name: "Anom", age: 19, gender: "Male" },
+  { id: 1, name: "Vitor Fernando de Souza Gadelha", age: '01/04/1997', gender: "Male" },
   { id: 2, name: "Megha koasdioa oaisdhoaisnd oiashdoahsdio", age: 19, gender: "Female" },
   { id: 3, name: "Subham", age: 25, gender: "Male" },
 ]

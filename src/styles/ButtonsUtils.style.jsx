@@ -10,6 +10,14 @@ export const SContainer = styled.div`
 `
 export const SButton = styled.button`
   height: 40px;
-  text-align: center;
-  background-color: gray;
+  width: 80px;
+  font-size: 16px;
+  border-radius: 8px;
+  border-color: transparent;
+  background-color: #6c757d;
+  color: white;
+
+  &:hover {
+    background-color: red;
+  }
 `

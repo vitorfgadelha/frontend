@@ -9,6 +9,7 @@ export const SContainer = styled.div`
   font-size: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 8px;
+  overflow: auto;
 
   &:hover {
     background-color: #bcbbbb;
@@ -30,7 +31,6 @@ export const Gender = styled.div`
 
 export const Dob = styled.div`
   width: 10%;
-
 `
 
 export const Cpf = styled.div`
@@ -38,6 +38,7 @@ export const Cpf = styled.div`
 `
 
 export const Race = styled.div`
+  overflow: auto;
   width: 5%;
 `
 
@@ -50,6 +51,15 @@ export const Delivered = styled.div`
 `
 export const Button = styled.button`
   height: 40px;
-  width: auto
+  width: 80px;
+  font-size: 16px;
+  border-radius: 8px;
+  border-color: transparent;
+  background-color: #0d6efd;
+  color: white;
+
+  &:hover {
+    background-color: blue;
+  }
 `
 

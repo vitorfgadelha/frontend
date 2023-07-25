@@ -15,18 +15,28 @@ export const Logo = styled.img`
 `
 
 export const Title = styled.h2`
-  font-size: 20px;
+  font-size: 32px;
   text-align: center;
   `
 
   export const ParticipantsInfo = styled.div`
   margin-left: 150px;
-  width: 500px;
-  height: 30px;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  height: 60px;
 `
 
 export const SearchBar = styled.input`
   width: 500px;
-  height: auto;
+  height: 35px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
 `
 
+export const ParticipantsCount = styled.h2`
+  margin-left: 150px;
+  font-size: 18px;
+  text-align: center;
+`
