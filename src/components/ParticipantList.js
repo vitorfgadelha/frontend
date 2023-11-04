@@ -42,14 +42,14 @@ class ParticipantList extends Component {
                     <td style={{width: "34%"}}>{participant.name}</td>
                     <td align="center" style={{width: "5%"}}>{participant.gender}</td>
                     <td align="center" style={{width: "10%"}}>{participant.dob}</td>
-                    <td align="center" style={{width: "12%"}}>{participant.cpf}</td>
+                    <td align="center" style={{width: "12%"}}>{participant.cpf  === '0000000None'? "" : participant.cpf}</td>
                     <td align="center" style={{width: "5%"}}>{participant.course}</td>
                     <td align="center"  style={{width: "5%"}}>{participant.shirt}</td>
                     <td align="center" style={{width: "5%"}}>
                       <DeliverModal
                         delivered={participant.delivered}
                         pk={participant.bib}
-                        resetState={this.props.resetState}
+                        resetState={this.props.resetState} 
                         /></td>
                     <td align="center" style={{width: "15%"}}>
                       <NewParticipantModal

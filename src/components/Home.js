@@ -20,6 +20,7 @@ class Home extends Component {
   count = {
     delivered: 0,
     not_delivered: 0,
+    total: 0,
   };
   
   componentDidMount() {
@@ -66,7 +67,7 @@ class Home extends Component {
   render() {
     const { currentPage } = this.state;
     this.pageSize = 3;
-    this.pagesCount = Math.ceil(1400 / 100);
+    this.pagesCount = Math.ceil(1500 / 100);
     return (
       <Container style={{ marginTop: "20px" }}>
         <div className="d-flex justify-content-center">
@@ -130,9 +131,9 @@ class Home extends Component {
           </Col>
         </Row>
         <Row>
-          <Col>
+          {/* <Col>
             <NewParticipantModal create={true} resetState={this.resetState}/>
-          </Col>
+          </Col> */}
           <Col></Col>
           <Col></Col>
           <Col></Col>
