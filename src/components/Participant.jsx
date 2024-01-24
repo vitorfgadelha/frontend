@@ -1,7 +1,16 @@
+import { useState } from 'react';
 import { Button , Cpf, Delivered, Dob, Gender, Id, Name, Race, SContainer, Shirt } from "../styles/Participant.style";
 import ButtonsUtils from "./ButtonsUtils";
+import DeliverWindow from "./DeliverWindow";
 
 export default function Participant({id, name, age}) {
+  const [showDeliverWindow, setShowDeliverWindow] = useState(false);
+
+  const handleClick = () => {
+    setShowDeliverWindow(!showDeliverWindow);
+    console.log("Abriu")
+  }
+
   return(
     <SContainer>
       <Id>{id}</Id>
@@ -12,9 +21,10 @@ export default function Participant({id, name, age}) {
       <Race>teste</Race>
       <Shirt>M</Shirt>
       <Delivered>
-        <Button>Entregar</Button>
+        <Button onClick={handleClick}>Entregar</Button>
       </Delivered>
       <ButtonsUtils />
+      <DeliverWindow isOpen={showDeliverWindow}/>
     </SContainer>
   )
 }
