@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import { Col, Container, Input, Row, Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import {
+  Col,
+  Container,
+  Input,
+  Row,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+} from "reactstrap";
 import ParticipantList from "./ParticipantList";
 import NewParticipantModal from "./NewParticipantModal";
-import Paginator from "./Paginator";
-import ReactPaginate from 'react-paginate';
-import {Button} from "reactstrap"
+import { Button } from "reactstrap";
 
 import axios from "axios";
 
@@ -15,54 +21,60 @@ class Home extends Component {
     participants: [],
     currentPage: 0,
     pagination: true,
-    startIndex : 0,
-    endIndex : 4
+    startIndex: 0,
+    endIndex: 4,
   };
 
   count = {
     delivered: 0,
     not_delivered: 0,
   };
-  
+
   componentDidMount() {
     this.resetState();
-    axios.get(API_URL + 'count_delivered/').then(res => {
-      this.count.delivered = res.data
-  })
-    axios.get(API_URL + 'count_not_delivered/').then(res => {
-    this.count.not_delivered = res.data
-  })
-}
+    axios.get(API_URL + "count_delivered/").then((res) => {
+      this.count.delivered = res.data;
+    });
+    axios.get(API_URL + "count_not_delivered/").then((res) => {
+      this.count.not_delivered = res.data;
+    });
+  }
 
   getParticipants = () => {
-    axios.get(API_URL).then(res =>this.setState({ participants: res.data.results }));
-    };
+    axios
+      .get(API_URL)
+      .then((res) => this.setState({ participants: res.data.results }));
+  };
 
   resetState = () => {
     this.getParticipants();
   };
 
   onChange(e) {
-    axios.get(API_URL + '?search=' + e.target.value).then(res => this.setState({ participants: res.data.results }));
+    axios
+      .get(API_URL + "?search=" + e.target.value)
+      .then((res) => this.setState({ participants: res.data.results }));
   }
 
   handleUpdate(pageNumber) {
-    axios.get(API_URL + `?page=${pageNumber}`).then(res =>this.setState({ participants: res.data.results }));
+    axios
+      .get(API_URL + `?page=${pageNumber}`)
+      .then((res) => this.setState({ participants: res.data.results }));
   }
 
   toggle() {
-    axios.get(API_URL + 'generate_report/').then(() =>{
-      alert("Relatório Gerado")
-    })
+    axios.get(API_URL + "generate_report/").then(() => {
+      alert("Relatório Gerado");
+    });
   }
 
   handleClick(event, index) {
     event.preventDefault();
     this.setState({
-      currentPage: index
+      currentPage: index,
     });
-    let pageNumber = index + 1
-    this.handleUpdate(pageNumber)
+    let pageNumber = index + 1;
+    this.handleUpdate(pageNumber);
   }
 
   render() {
@@ -108,18 +120,19 @@ class Home extends Component {
         </div>
         <Row>
           <Col>
-        <Input align="center"
-                placeholder="Pesquisar Nome ou CPF"
-                style={{ width:"500px"}}
-                value={this.state.amount}
-                onChange={(value) => this.onChange(value)}
-                ></Input>
+            <Input
+              align="center"
+              placeholder="Pesquisar Nome ou CPF"
+              style={{ width: "500px" }}
+              value={this.state.amount}
+              onChange={(value) => this.onChange(value)}
+            ></Input>
           </Col>
           <Col>
-          <div>Kits Entregues: {this.count.delivered}</div>
+            <div>Kits Entregues: {this.count.delivered}</div>
           </Col>
           <Col>
-          <div>Kits a entregar: {this.count.not_delivered}</div>
+            <div>Kits a entregar: {this.count.not_delivered}</div>
           </Col>
         </Row>
         <Row>
@@ -127,29 +140,28 @@ class Home extends Component {
             <ParticipantList
               participants={this.state.participants}
               resetState={this.resetState}
-              handleScroll={this.handleScroll}>
-            </ParticipantList>
+              handleScroll={this.handleScroll}
+            ></ParticipantList>
           </Col>
         </Row>
         <Row>
           <Col>
-            <NewParticipantModal create={true} resetState={this.resetState}/>
+            <NewParticipantModal create={true} resetState={this.resetState} />
           </Col>
           <Col></Col>
           <Col></Col>
           <Col></Col>
           <Col>
-          <Button
-            color="primary"
-            className="float-right"
-            onClick={this.toggle}
-            style={{ minWidth: "200px" }}
+            <Button
+              color="primary"
+              className="float-right"
+              onClick={this.toggle}
+              style={{ minWidth: "200px" }}
             >
-          Gerar Relatório
-          </Button>
+              Gerar Relatório
+            </Button>
           </Col>
         </Row>
-
       </Container>
     );
   }

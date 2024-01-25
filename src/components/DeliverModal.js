@@ -6,59 +6,82 @@ import axios from "axios";
 import { API_URL } from "../constants";
 
 class DeliverModal extends Component {
-
   state = {
     modal: false,
   };
 
   participantState = {
-    bib:"",
-    name:"",
+    bib: "",
+    name: "",
     dob: "",
-    updated_at:"",
+    updated_at: "",
     delivered: true,
-    obs:"",
-  }
+    obs: "",
+  };
+
+  participant = {
+    name: "",
+    type: "",
+  };
 
   toggle = () => {
-    this.setState(previous => ({
-      modal: !previous.modal
+    this.setState((previous) => ({
+      modal: !previous.modal,
     }));
   };
 
-  deliverKit = bib => {
-    axios.get(API_URL + bib + '/').then(res => {
-      axios.put(API_URL + bib + '/', {bib: bib, name: res.data.name, delivered: this.participantState.delivered ,obs: this.participantState.obs, dob: res.data.dob})
-      .then(() =>{
-        if(alert("Entrega Realizada para " + this.participantState.obs)){}
-        else
-          window.location.reload(); 
-      })
-      this.toggle()
-  })
-  }
+  deliverKit = (bib) => {
+    axios.get(API_URL + bib + "/").then((res) => {
+      axios
+        .put(API_URL + bib + "/", {
+          bib: bib,
+          name: res.data.name,
+          delivered: this.participantState.delivered,
+          obs: this.participantState.obs,
+          dob: res.data.dob,
+        })
+        .then(() => {
+          if (alert("Entrega Realizada para " + this.participantState.obs)) {
+          } else window.location.reload();
+        });
+      this.toggle();
+    });
+  };
 
   handleDelivery(e) {
-    this.participantState.obs = e.target.value
+    this.participantState.obs = e.target.value;
   }
+
+  getParticipantInfo = (id) => {
+    axios.get(API_URL + id + "/").then((res) => {
+      this.participant.name = res.data.name;
+      this.participant.type = res.data.type;
+    });
+  };
 
   render() {
     return (
       <Fragment>
-        <Button disabled={this.props.delivered ? true : false}
-                color={this.props.delivered ? "success" : "primary"}
-                onClick={() => this.toggle()}>
-          {this.props.delivered ? "Entregue": "Entregar"}
+        <Button
+          disabled={this.props.delivered ? true : false}
+          color={this.props.delivered ? "success" : "primary"}
+          onClick={() => this.toggle()}
+        >
+          {this.props.delivered ? "Entregue" : "Entregar"}
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>
-            Você deseja entregar esse Kit?
+          <ModalHeader
+            isopen={this.getParticipantInfo(this.props.pk)}
+            toggle={this.toggle}
+          >
+            Você deseja entregar kit {this.participant.type} para{" "}
+            {this.participant.name}?
           </ModalHeader>
           <Input
-          placeholder="Quem irá receber?"
-          style = {{width: "400px"}}
-          value={this.state.amount}
-          onChange={(value) => this.handleDelivery(value)}
+            placeholder="Quem irá receber?"
+            style={{ width: "400px" }}
+            value={this.state.amount}
+            onChange={(value) => this.handleDelivery(value)}
           ></Input>
           <ModalFooter>
             <Button type="button" onClick={() => this.toggle()}>
