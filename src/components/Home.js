@@ -80,7 +80,7 @@ class Home extends Component {
   render() {
     const { currentPage } = this.state;
     this.pageSize = 3;
-    this.pagesCount = Math.ceil(3500 / 100);
+    this.pagesCount = Math.ceil(1400 / 100);
     return (
       <Container style={{ marginTop: "20px" }}>
         <div className="d-flex justify-content-center">
@@ -135,7 +135,7 @@ class Home extends Component {
             <div>Kits a entregar: {this.count.not_delivered}</div>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ width: "auto" }}>
           <Col>
             <ParticipantList
               participants={this.state.participants}

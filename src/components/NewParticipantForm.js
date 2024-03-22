@@ -14,20 +14,23 @@ class NewParticipantForm extends React.Component {
     cpf: "",
     course: "",
     shirt: "",
+    type: "",
+    team: "",
   };
 
   componentDidMount() {
     if (this.props.participant) {
-      const { bib, name, gender, dob, cpf, course, shirt} = this.props.participant;
-      this.setState({ bib, name, gender, dob, cpf, course, shirt});
+      const { bib, name, gender, dob, cpf, course, shirt, type, team } =
+        this.props.participant;
+      this.setState({ bib, name, gender, dob, cpf, course, shirt, type, team });
     }
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  createParticipant = e => {
+  createParticipant = (e) => {
     e.preventDefault();
     axios.post(API_URL, this.state).then(() => {
       this.props.resetState();
@@ -35,21 +38,25 @@ class NewParticipantForm extends React.Component {
     });
   };
 
-  editParticipant = e => {
+  editParticipant = (e) => {
     e.preventDefault();
-    axios.put(API_URL + this.state.bib + '/', this.state).then(() => {
+    axios.put(API_URL + this.state.bib + "/", this.state).then(() => {
       this.props.resetState();
       this.props.toggle();
     });
   };
 
-  defaultIfEmpty = value => {
+  defaultIfEmpty = (value) => {
     return value === "" ? "" : value;
   };
 
   render() {
     return (
-      <Form onSubmit={this.props.participant ? this.editParticipant : this.createParticipant}>
+      <Form
+        onSubmit={
+          this.props.participant ? this.editParticipant : this.createParticipant
+        }
+      >
         <FormGroup>
           <Label for="bib">Bib:</Label>
           <Input
@@ -69,7 +76,7 @@ class NewParticipantForm extends React.Component {
           />
         </FormGroup>
         <FormGroup>
-          <Label for="name">Sexo: (F ou M)</Label>
+          <Label for="gender">Sexo: (F ou M)</Label>
           <Input
             type="text"
             name="gender"
@@ -114,6 +121,25 @@ class NewParticipantForm extends React.Component {
             value={this.defaultIfEmpty(this.state.shirt)}
           />
         </FormGroup>
+        <FormGroup>
+          <Label for="type">Tipo do Kit:</Label>
+          <Input
+            type="text"
+            name="type"
+            onChange={this.onChange}
+            value={this.defaultIfEmpty(this.state.type)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="team">Equipe:</Label>
+          <Input
+            type="text"
+            name="team"
+            onChange={this.onChange}
+            value={this.defaultIfEmpty(this.state.team)}
+          />
+        </FormGroup>
+
         <Button>Enviar</Button>
       </Form>
     );

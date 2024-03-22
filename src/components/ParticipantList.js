@@ -9,68 +9,74 @@ class ParticipantList extends Component {
     const participants = this.props.participants;
 
     return (
-      <><Table hover responsive>
-        <thead align="center">
-          <tr>
-            <th align="center" style={{width: "5%"}}>N°</th>
-            <th align="center" style={{width: "35%"}}>Nome</th>
-            <th align="center" style={{width: "5%"}}>Sexo</th>
-            <th align="center" style={{width: "10%"}}>Nascimento</th>
-            <th align="center" style={{width: "12%"}}>CPF</th>
-            <th align="center" style={{width: "5%"}}>Prova</th>
-            <th align="center" style={{width: "5%"}}>Camisa</th>
-            <th align="center" style={{width: "5%"}}>Entregue</th>
-            <th align="center" style={{width: "15%"}}></th>
-            <th></th>
-          </tr>
-        </thead>
-      </Table>
-      <div style={{height: "300px", overflowY: "auto"}}>
-      <Table hover responsive onScroll={this.props.handleScroll}>
-        <tbody>
-          {!participants || participants.length <= 0 ? (
-          <tr>
-            <td colSpan="9" align="center">
-              <b>Ops, no one here yet</b>
-            </td>
-          </tr>
-          ) : (
-            participants.map(participant => (
-                <tr key={participant.bib} >
-                  <td colSpan="9" align="center"></td>
-                    <td align="center" style={{width: "5%"}}>{participant.bib}</td>
-                    <td style={{width: "34%"}}>{participant.name}</td>
-                    <td align="center" style={{width: "5%"}}>{participant.gender}</td>
-                    <td align="center" style={{width: "10%"}}>{participant.dob}</td>
-                    <td align="center" style={{width: "12%"}}>{participant.cpf}</td>
-                    <td align="center" style={{width: "5%"}}>{participant.course}</td>
-                    <td align="center"  style={{width: "5%"}}>{participant.shirt}</td>
-                    <td align="center" style={{width: "5%"}}>
-                      <DeliverModal
-                        delivered={participant.delivered}
-                        pk={participant.bib}
-                        resetState={this.props.resetState}
-                        /></td>
-                    <td align="center" style={{width: "15%"}}>
-                      <NewParticipantModal
-                        create={false}
-                        participant={participant}
-                        resetState={this.props.resetState}
-                        />
-                      &nbsp;&nbsp;
-                      <ConfirmRemovalModal
-                        pk={participant.bib}/>
-                    </td>
-                  </tr>
-            ))
-          )
-            }
-               </tbody>
-              </Table>
-              </div>
-        </>
+      <div>
+        <Table hover responsive>
+          <thead>
+            <tr align="center">
+              <th align="center">Nº</th>
+              <th align="center">NOME</th>
+              <th align="center">SEXO</th>
+              <th align="center">DOB</th>
+              <th align="center">CPF</th>
+              <th align="center">PROVA</th>
+              <th align="center">CAMISA</th>
+              <th align="center">TIPO</th>
+              <th align="center">EQUIPE</th>
+              <th align="center">ENTREGUE</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!participants || participants.length <= 0 ? (
+              <tr>
+                <td colSpan="10" align="center">
+                  <b>Nenhum atleta encontrado</b>
+                </td>
+              </tr>
+            ) : (
+              participants.map((participant) => (
+                <tr key={participant.bib}>
+                  <td align="center">{participant.bib}</td>
+                  <td>{participant.name}</td>
+                  <td align="center">{participant.gender}</td>
+                  <td align="center">
+                    {participant.dob == null
+                      ? ""
+                      : participant.dob.split("-")[2] +
+                        "/" +
+                        participant.dob.split("-")[1] +
+                        "/" +
+                        participant.dob.split("-")[0]}
+                  </td>
+                  <td align="center">
+                    {participant.cpf === "0000000None" ? "" : participant.cpf}
+                  </td>
+                  <td align="center">{participant.course}</td>
+                  <td align="center">{participant.shirt}</td>
+                  <td align="center">{participant.type}</td>
+                  <td align="center">{participant.team}</td>
+                  <td align="center">
+                    <DeliverModal
+                      delivered={participant.delivered}
+                      pk={participant.bib}
+                      resetState={this.props.resetState}
+                    />
+                  </td>
+                  <td align="center" style={{ width: "15%" }}>
+                    <NewParticipantModal
+                      create={false}
+                      participant={participant}
+                      resetState={this.props.resetState}
+                    />
+                    &nbsp;&nbsp;
+                    <ConfirmRemovalModal pk={participant.bib} />
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
     );
   }
 }
-
 export default ParticipantList;
