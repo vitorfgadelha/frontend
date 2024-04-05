@@ -79,42 +79,46 @@ class Home extends Component {
 
   render() {
     const { currentPage } = this.state;
-    this.pageSize = 3;
-    this.pagesCount = Math.ceil(1400 / 100);
+    this.pagesCount = Math.ceil(5000 / 10);
     return (
       <Container style={{ marginTop: "20px" }}>
         <div className="d-flex justify-content-center">
           {this.state.pagination && (
-            <Pagination size="sm">
+            <Pagination size="lg">
+              <PaginationLink
+                className="prev-next-buttons"
+                onClick={(e) => this.handleClick(e, 0)}
+                first
+                href="#"
+              ></PaginationLink>
               <PaginationItem disabled={currentPage <= 0}>
                 <PaginationLink
                   className="prev-next-buttons"
                   onClick={(e) => this.handleClick(e, currentPage - 1)}
+                  previous
                   href="#"
-                >
-                  Previous
+                ></PaginationLink>
+              </PaginationItem>
+              <PaginationItem disabled>
+                <PaginationLink>
+                  {currentPage > 0 ? currentPage * 10 + 1 : 1} -{" "}
+                  {(currentPage + 1) * 10}
                 </PaginationLink>
               </PaginationItem>
-              {[...Array(this.pagesCount)].map((currentPageno, i) => (
-                <PaginationItem active={i === currentPage} key={i}>
-                  <PaginationLink
-                    className="page-numbers"
-                    onClick={(e) => this.handleClick(e, i)}
-                    href="#"
-                  >
-                    {i + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
               <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
                 <PaginationLink
                   className="prev-next-buttons"
                   onClick={(e) => this.handleClick(e, currentPage + 1)}
+                  next
                   href="#"
-                >
-                  Next
-                </PaginationLink>
+                ></PaginationLink>
               </PaginationItem>
+              <PaginationLink
+                className="prev-next-buttons"
+                onClick={(e) => this.handleClick(e, this.pagesCount - 1)}
+                last
+                href="#"
+              ></PaginationLink>
             </Pagination>
           )}
         </div>
