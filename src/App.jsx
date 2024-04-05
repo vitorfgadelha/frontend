@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React from "react";
 import Footnote from "./components/Footnote";
 import Header from "./components/Header";
 import Home from "./components/Home";
