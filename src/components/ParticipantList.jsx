@@ -33,8 +33,8 @@ const ParticipantList = (props) => {
             </tr>
           ) : (
             participants.map((participant) => (
-              <tr key={participant.bib}>
-                <td align="center">{participant.bib}</td>
+              <tr key={participant.id}>
+                <td align="center">{participant.id}</td>
                 <td>{participant.name}</td>
                 <td align="center">{participant.gender}</td>
                 <td align="center">
@@ -56,7 +56,7 @@ const ParticipantList = (props) => {
                 <td align="center">
                   <DeliverModal
                     delivered={participant.delivered}
-                    pk={participant.bib}
+                    pk={participant.id}
                     resetState={props.resetState}
                   />
                 </td>
@@ -67,7 +67,7 @@ const ParticipantList = (props) => {
                     resetState={props.resetState}
                   />
                   &nbsp;&nbsp;
-                  <ConfirmRemovalModal pk={participant.bib} />
+                  <ConfirmRemovalModal pk={participant.id} />
                 </td>
               </tr>
             ))

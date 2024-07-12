@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://192.168.5.52:8000",
+  "proxy": "http://192.168.5.38:8000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -13,12 +13,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-paginate": "^8.1.5",
-    "react-scripts": "5.0.1",
+    "react-router-dom": "^6.24.1",
+    "react-scripts": "^5.0.1",
     "reactstrap": "^9.1.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"npm:start-front\" \"npm:start-back\"",
+    "start": "concurrently \"npm run start-front\" \"npm run start-back\"",
     "start-front": "react-scripts start",
     "start-back": "cd ../backend && python manage.py runserver 0.0.0.0:8000",
     "build": "react-scripts build",

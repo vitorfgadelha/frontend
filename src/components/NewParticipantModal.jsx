@@ -21,6 +21,7 @@ const NewParticipantModal = (props) => {
         className="float-right"
         onClick={toggle}
         style={{ minWidth: "200px" }}
+        disabled
       >
         Criar Novo Participante
       </Button>

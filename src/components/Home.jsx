@@ -22,22 +22,29 @@ const Home = () => {
   // eslint-disable-next-line no-unused-vars
   const [pagination, setPagination] = useState(true);
   const [count, setCount] = useState({ delivered: 0, not_delivered: 0 });
+  const [pageIds, setPageIds] = useState({ first_id: null, last_id: null });
 
-  let pagesCount = Math.ceil(5000 / 10);
+  let pagesCount = Math.ceil(3700 / 100);
 
   useEffect(() => {
     resetState();
     axios.get(API_URL + "count_delivered/").then((res) => {
-      setCount((prevState) => ({ ...prevState, delivered: res.data }));
+      setCount((prevState) => ({ ...prevState, delivered: res.data.count }));
     });
     axios.get(API_URL + "count_not_delivered/").then((res) => {
-      setCount((prevState) => ({ ...prevState, not_delivered: res.data }));
+      setCount((prevState) => ({
+        ...prevState,
+        not_delivered: res.data.count,
+      }));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getParticipants = () => {
-    axios.get(API_URL).then((res) => setParticipants(res.data.results));
+    axios.get(API_URL).then((res) => {
+      setParticipants(res.data.results);
+      setPageIds({ first_id: res.data.first_id, last_id: res.data.last_id });
+    });
   };
 
   const resetState = () => {
@@ -51,9 +58,10 @@ const Home = () => {
   };
 
   const handleUpdate = (pageNumber) => {
-    axios
-      .get(API_URL + `?page=${pageNumber}`)
-      .then((res) => setParticipants(res.data.results));
+    axios.get(API_URL + `?page=${pageNumber}`).then((res) => {
+      setParticipants(res.data.results);
+      setPageIds({ first_id: res.data.first_id, last_id: res.data.last_id });
+    });
   };
 
   const toggle = () => {
@@ -90,8 +98,7 @@ const Home = () => {
             </PaginationItem>
             <PaginationItem disabled>
               <PaginationLink>
-                {currentPage > 0 ? currentPage * 10 + 1 : 1} -{" "}
-                {(currentPage + 1) * 10}
+                {pageIds.first_id} - {pageIds.last_id}
               </PaginationLink>
             </PaginationItem>
             <PaginationItem disabled={currentPage >= pagesCount - 1}>

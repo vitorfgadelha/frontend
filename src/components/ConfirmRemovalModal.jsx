@@ -3,13 +3,13 @@ import { Modal, ModalHeader, Button, ModalFooter } from "reactstrap";
 import axios from "axios";
 import { API_URL } from "../constants";
 
-const ConfirmRemovalModal = (props) => {
+const ConfirmRemovalModal = ({ pk }) => {
   const [modal, setModal] = useState(false);
   const [participant, setParticipant] = useState({
     name: "",
     delivered: "",
     updated_at: "",
-    obs: "",
+    name_delivered: "",
   });
 
   const toggle = () => {
@@ -17,11 +17,12 @@ const ConfirmRemovalModal = (props) => {
   };
 
   const getParticipantInfo = (id) => {
-    axios.get(API_URL + id + "/").then((res) => {
+    axios.get(`${API_URL}${id}/`).then((res) => {
       const formattedParticipant = {
         name: res.data.name,
+        type: res.data.type,
         delivered: res.data.delivered,
-        obs: res.data.obs,
+        name_received: res.data.name_received,
         updated_at: formatInfo(res.data.updated_at),
       };
       setParticipant(formattedParticipant);
@@ -30,17 +31,18 @@ const ConfirmRemovalModal = (props) => {
 
   useEffect(() => {
     if (modal) {
-      getParticipantInfo(props.pk);
+      getParticipantInfo(pk);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modal, props.pk]);
+  }, [modal, pk]);
 
   const formatInfo = (date) => {
+    if (!date) return "";
     const hour = date.substr(11, 5);
     const year = date.substr(0, 4);
     const month = date.substr(5, 2);
     const day = date.substr(8, 2);
-    return hour + " " + day + "/" + month + "/" + year;
+    return `${hour} ${day}/${month}/${year}`;
   };
 
   return (
@@ -49,12 +51,22 @@ const ConfirmRemovalModal = (props) => {
         Check
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader>{`Participante ${participant.name} Tipo do Kit: Simples`}</ModalHeader>
-        <div align="center">
+        <ModalHeader className="d-flex justify-content-center">
+          <div className="text-center">
+            {`${participant.name}`}
+            <br />
+            {`KIT ${participant.type}`}
+          </div>
+        </ModalHeader>
+        <div style={{ textAlign: "center", margin: "10px 0" }}>
           {`Kit ${participant.delivered ? "Entregue" : "a entregar"}`}
         </div>
-        <div align="center">Entregue para: {participant.obs}</div>
-        <div align="center">Última Atualização: {participant.updated_at}</div>
+        <div style={{ textAlign: "center", margin: "10px 0" }}>
+          Entregue para: {participant.name_received}
+        </div>
+        <div style={{ textAlign: "center", margin: "10px 0" }}>
+          Última Atualização: {participant.updated_at}
+        </div>
         <ModalFooter>
           <Button type="button" onClick={toggle}>
             Close
